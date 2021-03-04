@@ -15,7 +15,7 @@ http://opensource.org/licenses/mit-license.php
 
 // set your language (en/ja/ru/ro/es/tr/fr/de/zh/pt_BR)
 $cfg_lang = 'zh';
-$cfg_ver  = '7.4';
+$cfg_ver  = '8.0';
 
 // set your chm-extract command
 // ** must be 'sprintf() format'
@@ -27,7 +27,7 @@ $cfg_ver  = '7.4';
 $cfg_chm  = 'extract_chmLib %1$s %2$s';
 
 // set true, if you have font trouble with google open sans (e.g. Zeal on windows)
-$cfg_nosans = true;
+$cfg_nosans = false;
 
 
 //----------------------------------------
@@ -54,7 +54,7 @@ $c_url_doc = 'http://tokyo.kapeli.com/feeds/PHP.tgz';
 // @link http://php.net/download-docs.php
 // ** chm (manual or enhanced) only!
 //
-$c_url_chm = "http://jp2.php.net/get/php_enhanced_{$cfg_lang}.chm/from/this/mirror";
+$c_url_chm = "https://www.php.net/distributions/manual/php_enhanced_{$cfg_lang}.chm";
 
 
 //----------------------------------------
@@ -63,7 +63,7 @@ $c_url_chm = "http://jp2.php.net/get/php_enhanced_{$cfg_lang}.chm/from/this/mirr
 //
 //----------------------------------------
 
-echo "\nStart build PHP 7.x docset ...\n";
+echo "\nStart build PHP {$cfg_ver} docset ...\n";
 echo "\nDownload original docset (en) and 'CHM' help file ...\n\n";
 
 try {
@@ -218,7 +218,7 @@ foreach ($res as $row) {
 		continue;
 	}
 
-	$list[] = [$t->nodeValue, $c_guide, $row['path'], 'ja'];
+	$list[] = [$t->nodeValue, $c_guide, $row['path'], $cfg_lang];
 }
 
 $stmt = $db->prepare('INSERT OR IGNORE INTO searchIndex(name, type, path, lang) VALUES (?, ?, ?, ?)');
@@ -227,7 +227,7 @@ foreach ($list as $val) {
 	$stmt->execute($val);
 }
 
-echo "\nPHP 7.x docset updated !\n\n";
+echo "\nPHP {$cfg_ver} docset updated !\n\n";
 
 
 //----------------------------------------
